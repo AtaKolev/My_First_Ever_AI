@@ -57,6 +57,7 @@ class Agent:
                           "NW" : (1, -1),
                           "SE" : (-1, 1),
                           "SW" : (-1, -1)}
+        print(self.grid)
         
     def next_state_and_reward(self, state, action):
         
@@ -93,13 +94,20 @@ class Agent:
         
     def move(self):
         
-        self.grid[self.position] = ' '
         adjacent_values = {}
         for key in self.movements.keys():
             adjacent_values.update({tuple(sum(ele) for ele in zip(self.position, self.movements[key])) : 
                                     self.state_values[tuple(sum(ele) for ele in zip(self.position, self.movements[key]))]})
-        #for state in adjacent_values:
-            
+        
+        self.position = max(adjacent_values, key = adjacent_values.get)
+    
+    def visualize_move(self):
+        
+        self.grid[self.position] = ' '
+        self.move()
+        self.grid[self.position] = 'O'
+        print(self.grid)
+                    
         
     
         
