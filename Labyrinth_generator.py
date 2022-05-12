@@ -7,7 +7,7 @@ Created on Thu Oct 28 15:26:07 2021
 
 import numpy as np
 
-def lab_gen(entry_point: tuple, row_size: int, column_size: int,
+def lab_gen(entry_point: tuple, X: int, Y: int,
             wall_indexes: list, L_indexes: list, reverse_L_indexes: list,
             dash_indexes: list,
             stick_placement: list, reward_placement: list):
@@ -15,16 +15,13 @@ def lab_gen(entry_point: tuple, row_size: int, column_size: int,
     for lst in [wall_indexes, L_indexes, reverse_L_indexes, dash_indexes,
                 stick_placement, reward_placement]:
         for ele in lst:
-            if (ele[0] > row_size) or (ele[1] > column_size):
+            if (ele[0] > X) or (ele[1] > Y):
                 raise ValueError(f"Element: {ele} in {lst} beyond limits!")
     
-    x_y_dict = {'x' : np.arange(0, row_size),
-                'y' : np.arange(0, column_size)}
     lab_map_disp = []
-    
-    for y in range(len(x_y_dict['y'])-1, -1, -1):
+    for y in range(0, Y):
         temp = []
-        for x in range(0, len(x_y_dict['x']-1)):
+        for x in range(0, X):
             # if x == 0 and (y in np.arange(0, column_size)):
             #     if (x, y) == entry_point:
             #         temp.append('O')

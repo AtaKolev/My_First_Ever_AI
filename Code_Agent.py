@@ -10,12 +10,15 @@ import numpy as np
 class Agent:
     
     def __init__(self, starting_position, grid, gamma,
-                 treat, stick, learning_tolerance):
+                 treat, stick, learning_tolerance, reward_letter, stick_letter):
+        self.entry_point = starting_position
         self.position = starting_position
         self.grid = grid
         self.treat = treat
         self.stick = stick
         self.learning_tolerance = learning_tolerance
+        self.reward_letter = reward_letter
+        self.stick_letter = stick_letter
         self.states = []
         self.R_states = []
         self.S_states = []
@@ -108,7 +111,12 @@ class Agent:
         self.grid[self.position] = 'O'
         print(self.grid)
                     
+    def finish(self):
         
+        if (self.grid[self.position] == self.reward_letter) or (self.grid[self.position] == self.stick_letter):
+            print("Run Finished!")
+            print("Restart by running the loop again")
+            print(self.grid)
     
         
         
