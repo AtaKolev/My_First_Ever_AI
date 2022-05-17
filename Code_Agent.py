@@ -6,6 +6,7 @@ Created on Thu Oct 28 15:24:39 2021
 """
 
 import numpy as np
+import time
 
 class Agent:
     
@@ -83,7 +84,7 @@ class Agent:
         while True:
             for state in self.states:
                 value = 0
-                for action in list(self.action_probabilities.keys()):
+                for action in list(self.action_probability.keys()):
                     next_state, reward = self.next_state_and_reward(state, action)
                     if reward > 30:
                         value += self.special_case_probability[action] * (reward + self.gamma * self.state_values[next_state])
@@ -110,6 +111,7 @@ class Agent:
         self.move()
         self.grid[self.position] = 'O'
         print(self.grid)
+        time.sleep(1)
                     
     def finish(self):
         
@@ -117,35 +119,3 @@ class Agent:
             print("Run Finished!")
             print("Restart by running the loop again")
             print(self.grid)
-    
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        

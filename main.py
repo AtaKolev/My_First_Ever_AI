@@ -33,12 +33,18 @@ reward_letter = 'R'
 stick_letter = 'S'
 labyrinth = lg.lab_gen(entry_point, x_count, y_count, wall_index,
                        L_index, reverse_L_indexes, dash_indexes, stick_placement,
-                       reward_placement)
+                       reward_placement, reward_letter, stick_letter)
 
 ca = Agent(starting_position = entry_point,
-                grid = labyrinth,
+                grid = np.array(labyrinth),
                 gamma = 0.9, treat = 100, stick = -100, learning_tolerance = 1e-4,
                 reward_letter = reward_letter, stick_letter = stick_letter)
+
+while not ca.finish():
+    
+    ca.evaluate_state_values()
+    ca.visualize_move()
+    
 
 
 
