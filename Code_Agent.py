@@ -78,23 +78,31 @@ class Agent:
         
     def evaluate_state_values(self):
         
+        if not hasattr(self, 'state_values'):
+            self.state_values = {}
+        for state in self.states:
+            self.state_values.update({state : 0})
         new_state_values = np.zeros((self.grid.shape[0], self.grid.shape[1]))
-        self.state_values = new_state_values.copy()
         
         while True:
             for state in self.states:
                 value = 0
                 for action in list(self.action_probability.keys()):
                     next_state, reward = self.next_state_and_reward(state, action)
+                    if next_state not in self.states:
+                        continue
                     if reward > 30:
                         value += self.special_case_probability[action] * (reward + self.gamma * self.state_values[next_state])
                     else:
                         value += self.action_probability[action] * (reward + self.gamma * self.state_values[next_state])
                 new_state_values[state] = value
             
-            if np.sum(np.abs(new_state_values - self.state_values)) < self.learning_tolerance:
+            if np.sum(np.abs(new_state_values - np.array(list(self.state_values.values())))) < self.learning_tolerance:
                 self.state_values = new_state_values.copy()
+                for state in self.state_values.keys():
+                    self.state_values[state] = new_state_values[state]
                 break
+        
         
     def move(self):
         
