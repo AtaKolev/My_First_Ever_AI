@@ -6,7 +6,7 @@ Created on Tue May 10 20:27:47 2022
 @author: nasko
 """
 
-import Code_Agent
+from Code_Agent import Agent
 import Labyrinth_generator as lg
 import numpy as np
 import pandas as pd
@@ -33,7 +33,7 @@ labyrinth = lg.lab_gen(entry_point, x_count, y_count, wall_index,
                        L_index, reverse_L_indexes, dash_indexes, stick_placement,
                        reward_placement)
 
-ca = Code_Agent(starting_position = entry_point,
+ca = Agent(starting_position = entry_point,
                 grid = labyrinth,
                 gamma = 0.9, treat = 100, stick = 100, learning_tolerance = 1e-4)
 
