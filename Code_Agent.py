@@ -66,7 +66,7 @@ class Agent:
     def next_state_and_reward(self, state, action):
         
         next_state = tuple(sum(ele) for ele in zip(state, self.movements[action]))
-        if next_state in self.edges:
+        if next_state not in self.states:
             next_state = state
         
         if next_state in self.R_states:
@@ -74,15 +74,17 @@ class Agent:
         elif next_state in self.S_states:
             return next_state, self.stick
         else:
-            return next_state, 0
+            return next_state
         
     def evaluate_state_values(self):
         
         if not hasattr(self, 'state_values'):
             self.state_values = {}
         for state in self.states:
+            if state == self.position:
+                continue
             self.state_values.update({state : 0})
-        new_state_values = np.zeros((self.grid.shape[0], self.grid.shape[1]))
+        new_state_values = self.state_values.copy()
         
         while True:
             for state in self.states:
@@ -97,8 +99,9 @@ class Agent:
                         value += self.action_probability[action] * (reward + self.gamma * self.state_values[next_state])
                 new_state_values[state] = value
             
-            if np.sum(np.abs(new_state_values - np.array(list(self.state_values.values())))) < self.learning_tolerance:
-                self.state_values = new_state_values.copy()
+            if np.sum(np.abs(np.array(list(new_state_values.values())) -\
+                             np.array(list(self.state_values.values())))) < self.learning_tolerance:
+                #self.state_values = new_state_values.copy()
                 for state in self.state_values.keys():
                     self.state_values[state] = new_state_values[state]
                 break
@@ -108,6 +111,8 @@ class Agent:
         
         adjacent_values = {}
         for key in self.movements.keys():
+            if tuple(sum(ele) for ele in zip(self.position, self.movements[key])) not in list(self.state_values.keys())+self.S_states+self.R_states:
+                continue                  
             adjacent_values.update({tuple(sum(ele) for ele in zip(self.position, self.movements[key])) : 
                                     self.state_values[tuple(sum(ele) for ele in zip(self.position, self.movements[key]))]})
         
