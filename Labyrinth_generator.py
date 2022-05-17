@@ -10,7 +10,8 @@ import numpy as np
 def lab_gen(entry_point: tuple, X: int, Y: int,
             wall_indexes: list, L_indexes: list, reverse_L_indexes: list,
             dash_indexes: list,
-            stick_placement: list, reward_placement: list):
+            stick_placement: list, reward_placement: list,
+            reward_letter: str, stick_letter: str):
     
     for lst in [wall_indexes, L_indexes, reverse_L_indexes, dash_indexes,
                 stick_placement, reward_placement]:

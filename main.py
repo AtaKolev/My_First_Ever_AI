@@ -29,13 +29,16 @@ reverse_L_indexes = [(5, 8), (8, 8)]
 dash_indexes = [(0,0), (1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0), (7, 0), (8, 0), (9, 0), (10, 0), (11, 0),
                 (0,10), (1, 10), (2, 10), (3, 10), (4, 10), (5, 10), (6, 10), (7, 10), (8, 10), (9, 10), (10, 10), (11, 10),
                 (3, 2), (4, 2), (8, 2), (9, 2)]
+reward_letter = 'R'
+stick_letter = 'S'
 labyrinth = lg.lab_gen(entry_point, x_count, y_count, wall_index,
                        L_index, reverse_L_indexes, dash_indexes, stick_placement,
                        reward_placement)
 
 ca = Agent(starting_position = entry_point,
                 grid = labyrinth,
-                gamma = 0.9, treat = 100, stick = 100, learning_tolerance = 1e-4)
+                gamma = 0.9, treat = 100, stick = -100, learning_tolerance = 1e-4,
+                reward_letter = reward_letter, stick_letter = stick_letter)
 
 
 
