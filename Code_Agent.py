@@ -24,6 +24,7 @@ class Agent:
         self.R_states = []
         self.S_states = []
         self.edges = []
+        self.passed_states = []
         for i in range(self.grid.shape[0]-1):
             for j in range(self.grid.shape[1]-1):
                 if grid[i, j] == ' ':
@@ -109,14 +110,23 @@ class Agent:
         
     def move(self):
         
+        finished_move = False
         adjacent_values = {}
         for key in self.movements.keys():
             if tuple(sum(ele) for ele in zip(self.position, self.movements[key])) not in list(self.state_values.keys())+self.S_states+self.R_states:
-                continue                  
+                continue
+            if tuple(sum(ele) for ele in zip(self.position, self.movements[key])) in self.passed_states:
+                continue
+            if tuple(sum(ele) for ele in zip(self.position, self.movements[key])) in self.S_states+self.R_states:
+                self.position = tuple(sum(ele) for ele in zip(self.position, self.movements[key]))
+                finished_move = True
+                break
             adjacent_values.update({tuple(sum(ele) for ele in zip(self.position, self.movements[key])) : 
                                     self.state_values[tuple(sum(ele) for ele in zip(self.position, self.movements[key]))]})
         
-        self.position = max(adjacent_values, key = adjacent_values.get)
+        if not finished_move:
+            self.passed_states.append(self.position) 
+            self.position = max(adjacent_values, key = adjacent_values.get)
     
     def visualize_move(self):
         

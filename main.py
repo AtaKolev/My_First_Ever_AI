@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+ #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
 Created on Tue May 10 20:27:47 2022
@@ -9,7 +9,6 @@ Created on Tue May 10 20:27:47 2022
 from Code_Agent import Agent
 import Labyrinth_generator as lg
 import numpy as np
-import pandas as pd
 
 entry_point = (0,9)
 x_count = 11
@@ -40,10 +39,14 @@ ca = Agent(starting_position = (9, 0),
                 gamma = 0.9, treat = 100, stick = -100, learning_tolerance = 1e-4,
                 reward_letter = reward_letter, stick_letter = stick_letter)
 
-while not ca.finish():
+while True:
     
     ca.evaluate_state_values()
     ca.visualize_move()
+    if ca.finish():
+        break
+    else:
+        continue
     
 
 
