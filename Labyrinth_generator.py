@@ -59,15 +59,15 @@ def lab_gen(entry_point: tuple, X: int, Y: int,
             # else:
             #     temp.append(' ')
             if (x,y) in wall_indexes:
-                temp.append('|')
+                temp.append(' ')
             elif (x, y) in stick_placement:
                 temp.append('S')
             elif (x, y) in reward_placement:
                 temp.append('R')
             elif (x, y) in L_indexes:
-                temp.append('L')
+                temp.append(' ')
             elif (x, y) in reverse_L_indexes:
-                temp.append('⅃')
+                temp.append(' ')
             elif (x, y) in dash_indexes:
                 temp.append('-')
             elif (x, y) == entry_point:

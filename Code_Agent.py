@@ -137,8 +137,13 @@ class Agent:
         time.sleep(1)
                     
     def finish(self):
-        
-        if (self.grid[self.position] == self.reward_letter) or (self.grid[self.position] == self.stick_letter):
+
+        finished = False
+
+        if (self.grid[self.position] in self.reward_letter) or (self.grid[self.position] in self.stick_letter):
             print("Run Finished!")
             print("Restart by running the loop again")
             print(self.grid)
+            finished = True
+
+        return finished
